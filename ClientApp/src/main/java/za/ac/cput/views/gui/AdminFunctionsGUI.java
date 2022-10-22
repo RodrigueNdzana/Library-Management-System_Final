@@ -92,12 +92,30 @@ public class AdminFunctionsGUI extends JFrame implements ActionListener {
   @Override
     public void actionPerformed(ActionEvent e) {
        //Functionality
-       if(e.getSource()== btnViewBooks){
+       if(e.getSource()== btnAddUser){
             
                      new AddNewLearner().runAddLearner();
                      new AdminFunctionsGUI().setVisible(false);
+                     dispose();
                     
-       }
+       }else if(e.getSource()== btnIssueBook){
+            
+                     new issueBookGUI().setGUI();
+                     new AdminFunctionsGUI().setVisible(false);
+                     dispose();
+                     
+       }else if(e.getSource()== btnReturnBook){
+            
+                     new ReturnBooks().setGUI();
+                     new AdminFunctionsGUI().setVisible(false);
+                     dispose();
+                     
+    }else if(e.getSource()== btnAddBook){
+            
+                     new AddNewBook().runAddBook();
+                     new AdminFunctionsGUI().setVisible(false);
+                     dispose();
+    }
     }
     
      public static void main(String[] args) {
