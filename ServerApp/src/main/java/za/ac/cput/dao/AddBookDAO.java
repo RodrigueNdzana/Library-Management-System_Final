@@ -59,7 +59,7 @@ public class AddBookDAO {
 
     public boolean validateBookIsbn(String isbn) {
         boolean unique = true;
-        String validatCustomerIdSQL = "SELECT * FROM Books WHERE Isbn = ?";
+        String validatCustomerIdSQL = "SELECT * FROM Book WHERE Isbn = ?";
         try {
             preparedStatement = connection.prepareStatement(validatCustomerIdSQL);
             preparedStatement.setString(1, isbn);
@@ -80,5 +80,14 @@ public class AddBookDAO {
             }
         }
         return unique;
+    }
+    public boolean bookDetails(){
+         try{
+             String sql = "select * from book where concat(name, book_id) like ?";
+		PreparedStatement st = con.c.prepareStatement(sql);
+		st.setString(1, "%" + search.getText() + "%");
+		ResultSet rs = st.executeQuery();
+
+         }
     }
 }

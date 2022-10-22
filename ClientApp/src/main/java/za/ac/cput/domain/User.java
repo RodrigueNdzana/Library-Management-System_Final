@@ -8,33 +8,24 @@ package za.ac.cput.domain;
 import java.io.Serializable;
 
 public class User implements Serializable{
-    private int userID;
+    private String firstName;
     private String userName;
-    private int userContactNumber;
-    private String userAddressDetail;
     private String password;
-    
-    
-    public User(String userName, String password) {
+    private String confirmPassword;
+
+    public User(String firstName, String userName, String password, String confirmPassword) {
+        this.firstName = firstName;
         this.userName = userName;
         this.password = password;
-    }
-    
-
-    public User(int userID, String userName, int userContactNumber, String userAddressDetail, String password) {
-        this.userID = userID;
-        this.userName = userName;
-        this.userContactNumber = userContactNumber;
-        this.userAddressDetail = userAddressDetail;
-        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getUserName() {
@@ -45,29 +36,26 @@ public class User implements Serializable{
         this.userName = userName;
     }
 
-    public int getUserContactNumber() {
-        return userContactNumber;
-    }
-    
-     public void setPassword(String password) {
-        this.password = password;
-    }
-     
     public String getPassword() {
         return password;
     }
 
-    public void setUserContactNumber(int userContactNumber) {
-        this.userContactNumber = userContactNumber;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserAddressDetail() {
-        return userAddressDetail;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setUserAddressDetail(String userAddressDetail) {
-        this.userAddressDetail = userAddressDetail;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "firstName=" + firstName + ", userName=" + userName + ", password=" + password + ", confirmPassword=" + confirmPassword + '}';
     }
     
-    
+
 }

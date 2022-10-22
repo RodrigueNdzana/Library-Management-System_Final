@@ -14,13 +14,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import za.ac.cput.clientToServer.ClientToServer;
+import za.ac.cput.domain.Book;
+import za.ac.cput.domain.User;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import za.ac.cput.clientToServer.ClientToServer;
+import za.ac.cput.domain.User;
+
 
 
 public class SignUpGUI extends JFrame implements ActionListener {
@@ -56,7 +82,10 @@ public class SignUpGUI extends JFrame implements ActionListener {
     private JButton btnCancel;
     
     private Font  font2, font3;
-    
+    ArrayList<User> usersLog = new ArrayList<>();
+    ArrayList<User> adminsLog = new ArrayList<>();
+    ClientToServer request = new ClientToServer();
+    User userInfo;
     public SignUpGUI (){
         mainFrame = new JFrame("LIBRARY REGISTRATION");
         panelNorth = new JPanel();
@@ -214,7 +243,7 @@ public class SignUpGUI extends JFrame implements ActionListener {
         return valid;
     }
     
-    public void resetForm(){
+    public void resettingForm(){
         txtName.setText("");
         txtUserName.setText("");
         txtPassword.setText("");
@@ -227,16 +256,40 @@ public class SignUpGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == btnSave) {
-            if (validationChecker()) {
-                resetForm();
+             if (txtName.getText().isEmpty() || txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty() || txtConfirmPassword.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "All Field must be fields with value \n make some of the  field are not empty");
+            } else{
+                
+                boolean validateUser = request.validateUserName(txtUserName.getText());
+                if (validateUser == false){
+                String name = txtName.getText();
+                String userName = txtUserName.getText();
+                String password = txtPassword.getText();
+                String confirmPassword = txtConfirmPassword.getText();
+                
+                boolean response;
+                userInfo = new User(name, userName, password,confirmPassword);
+                 response = request.addUser(userInfo);
+                 
+                 if(response == true){
+                      JOptionPane.showMessageDialog(null, "User added  Successfully.");
+                        resettingForm();
+                        new SignUpGUI().setVisible(false);
+                        dispose();
+                        new LearnerGUI().setVisible(true);
+                 }else if (validateUser == true) {
+                    JOptionPane.showMessageDialog(null, "The Enter User Name already exits. \n enter another ISBN");
+                }
+                } 
             }
-        } else if (e.getSource() == btnCancel){ 
+//        
+       } else if (e.getSource() == btnCancel){ 
              new Front().setButton();
                      new SignUpGUI().setVisible(false);
                      
                      dispose();
                      
-                    resetForm();
+                  
                      
     }else if (e.getSource() == btnExit) {
             System.exit(0);

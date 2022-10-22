@@ -98,13 +98,43 @@ public class ClientToServer {
         }
         //return false;
     }
+     /************* Client to server request to add user
+     * @return  **************/
+    public boolean addUser(User mainUser) {
+        try {
+            output.writeObject("addUserLog");
+            output.flush();
+            output.writeObject(mainUser);
+            output.flush();
+            System.out.println("ClientServer resquet method has been completed ");
+            return input.readBoolean();
+        } catch (IOException ioe) {
+            System.out.println("ClientServer addUser Method has errr in adding user: " + ioe);
+            return true;
+        }
+    }
+    //validate username of a table sign since it is a primary. 
+    public boolean validateUserName(String userName) {
+        try {
+            output.writeObject("validatingUserNameLogin");
+            output.flush();
+            output.writeObject(userName);
+            output.flush();
+            System.out.println("ClientServer validating UserName Login method: completed");
+            return input.readBoolean();
+        } catch (IOException ex) {
+            System.out.println("CLientServer validatedUserID Method: " + ex);
+            //ex.printStackTrace();
+            return true;
+        }
+    }
 
     //****************** Login and sign up request *********************
     public ArrayList<User> gettingUserInfo() {
         
         try {
             System.out.println("ClientToServer sign up method page");
-            output.writeObject("getAdmins");
+            output.writeObject("gettingUserInfo");
             output.flush();
             System.out.println("ClientToServer sign up method has succefully be completed");
             return (ArrayList<User>) input.readObject();

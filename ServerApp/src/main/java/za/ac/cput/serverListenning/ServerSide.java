@@ -11,10 +11,12 @@ import za.ac.cput.domain.Book;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.System.in;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import za.ac.cput.dao.UserDAO;
+//import za.ac.cput.dao.UserDAO;
 import za.ac.cput.domain.Learner;
 
 import za.ac.cput.domain.User;
@@ -126,8 +128,47 @@ public class ServerSide {
                     output.writeBoolean(response);
                     output.flush();
                 } 
+                /************************ Login server side ************/
+                else if (clientRequest.equalsIgnoreCase("addUserLog")) {
+                    System.out.println("Request has been made to add user SignUpDetatils");
+                    User user = (User) input.readObject();
+                    userDAO = new UserDAO();
+                    boolean response = userDAO.addUser(user); // we are gettinig the response found in the boolean method of the clientToServer  
+                    System.out.println("The User has succefully been added: " + response); // user added with a true reponse if it successful and false otherwise
+                    output.writeBoolean(response);
+                    output.flush();
+                } else if (clientRequest.equalsIgnoreCase("validatingUserNameLogin")) {
+                    System.out.println("Request to Validate User Username");
+                    String userNameValidate = (String) input.readObject();
+                    userDAO = new UserDAO();
+                    boolean response = userDAO.validateUserId(userNameValidate);
+                    System.out.println("UserName Validated: " + response);
+                    output.writeBoolean(response);
+                    output.flush();
+                }
+                
+                /******************* Sign up server side********************/
+                  /************************ Login server side ************/
+                else if (clientRequest.equalsIgnoreCase("addUserLog")) {
+                    System.out.println("Request has been made to add user Sign Up Detatils ");
+                    User user = (User) input.readObject();
+                    userDAO = new UserDAO();
+                    boolean response = userDAO.addUser(user); // we are gettinig the response found in the boolean method of the clientToServer  
+                    System.out.println("The User has succefully been added: " + response); // user added with a true reponse if it successful and false otherwise
+                    output.writeBoolean(response);
+                    output.flush();
+                } else if (clientRequest.equalsIgnoreCase("validatingUserNameLogin")) {
+                    System.out.println("Request to Validate User Username");
+                    String userNameValidate = (String) input.readObject();
+                    userDAO = new UserDAO();
+                    boolean response = userDAO.validateUserId(userNameValidate);
+                    System.out.println("UserID Validated: " + response);
+                    output.writeBoolean(response);
+                    output.flush();
+                }
+                //////// 
                     else if (clientRequest.equalsIgnoreCase("gettingUserInfo")) {
-                    System.out.println("Requesting to Get All Users info ");
+                    System.out.println("Requesting to get user info (Log in system) ");
                     userDAO = new UserDAO();
                     usersDetail = userDAO.getAllUsers();
                     output.writeObject(usersDetail);

@@ -5,7 +5,9 @@
  */
 package za.ac.cput.domain;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
     private String firstName;
     private String userName;
     private String password;

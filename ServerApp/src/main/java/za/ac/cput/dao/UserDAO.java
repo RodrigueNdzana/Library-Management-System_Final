@@ -59,7 +59,7 @@ public class UserDAO {
     // validate userName on both sigup and loginPage***************************************
     public boolean validateUserId(String userName) {
         boolean isUserNameExist = false;
-        String userValidQuery = "SELECT * SignUp FROM  WHERE userName = ?";
+        String userValidQuery = "SELECT * FROM SignUp WHERE userName = ?";
         try {
             preparedStatement = connection.prepareStatement(userValidQuery);
             preparedStatement.setString(1, userName);
@@ -67,7 +67,7 @@ public class UserDAO {
             isUserNameExist = result.next();
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex);
-            ex.printStackTrace();
+            //ex.printStackTrace();
     } finally {
             try {
                 if (preparedStatement != null) {
@@ -90,7 +90,7 @@ public class UserDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                userList.add(new User(result.getString("user_id"), result.getString("full_name"), result.getString("password"), result.getString("inactive")));
+                userList.add(new User(result.getString("FullName"), result.getString("UserName"), result.getString("password"), result.getString("ConfirmPassword")));
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex);
