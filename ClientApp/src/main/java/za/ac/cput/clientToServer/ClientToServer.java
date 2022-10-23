@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import za.ac.cput.domain.Book;
 import za.ac.cput.domain.Learner;
 import za.ac.cput.domain.User;
+import za.ac.cput.views.gui.Front;
 
 public class ClientToServer {
 
@@ -63,7 +64,7 @@ public class ClientToServer {
             return input.readBoolean();
         } catch (IOException ex) {
             System.out.println("CLientToServer validatedIsbn Method  " + ex);
-            return false;
+            return true;
         }
        
     }
@@ -144,7 +145,8 @@ public class ClientToServer {
         }
     }
 //
-//    public static void main(String[] args) {
-//        new ClientToServer();
-//    }
+    public static void main(String[] args) {
+       // new ClientToServer();
+        new Front().setButton();
+    }
 }

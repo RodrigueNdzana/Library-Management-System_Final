@@ -340,7 +340,7 @@ public class AddNewBook extends JFrame implements ActionListener {
                  if(response == true){
                       JOptionPane.showMessageDialog(null, "Book added  Successfully.");
                         resettingForm();
-                 }else if (validateIsbn == false) {
+                 }else if (validateIsbn == true) {
                     JOptionPane.showMessageDialog(null, "The Enter ISBN already exits. \n enter another ISBN");
                 }
                 } 

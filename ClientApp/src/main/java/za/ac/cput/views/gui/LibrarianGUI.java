@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import za.ac.cput.clientToServer.ClientToServer;
 import za.ac.cput.domain.User;
 
 
@@ -52,7 +54,8 @@ public class LibrarianGUI extends JFrame implements ActionListener {
    
     private int index;
     private int size;
-        
+     ArrayList<User> adminsLog = new ArrayList<>();
+    ClientToServer request = new ClientToServer();    
     public LibrarianGUI() {
         super("Library_System_Management/Librarian");
         panelNorth = new JPanel();
@@ -215,22 +218,19 @@ public class LibrarianGUI extends JFrame implements ActionListener {
     
    public void actionPerformed(ActionEvent e){
         if (e.getSource() == btnLogin ) {
- //Got data from gui put it into variable email and password
- String username= txtStudent.getText();    
- String password = String.valueOf(txtPassword.getText());// Was getPassword but gave me error
- 
-//created user object with email and password
- User u = new User(username, password) ;            
-
-// if(UserDAO.show(u)){
-//   JOptionPane.showMessageDialog(null,"Welcome" +  " "+ u.getUserID()+ " " + u.getUserName());  
-// System.exit(0);
-// }  
-// else{
-// JOptionPane.showMessageDialog(null,"Your email and/ or password is incorrect");
-// txtStudent.hasFocus();
-// }
- 
+  adminsLog = request.gettingUserInfo();
+            boolean userLoginMatch = false;
+            for (int i = 0; i < adminsLog.size(); i++) {
+                if (adminsLog.get(i).getUserName().equals(txtStudent.getText()) && adminsLog.get(i).getPassword().equals(txtPassword.getText())) {
+                    userLoginMatch = true;
+                }
+            }
+            if (userLoginMatch == true) {
+                JOptionPane.showMessageDialog(null, "Welcome You have succefully Sign in.");
+              
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Admin ID or Password!");
+            }
         }else if (e.getSource() == btnCancel){ 
              new Front().setButton();
                      new LibrarianGUI().setVisible(false);

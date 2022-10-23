@@ -5,14 +5,14 @@
  */
 package za.ac.cput.dao;
 
+//import java.awt.print.Book;
 import za.ac.cput.connection.DatabaseConnection;
-import za.ac.cput.domain.Book;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import za.ac.cput.domain.Book;
 
 public class AddBookDAO {
 
@@ -81,13 +81,6 @@ public class AddBookDAO {
         }
         return unique;
     }
-    public boolean bookDetails(){
-         try{
-             String sql = "select * from book where concat(name, book_id) like ?";
-		PreparedStatement st = con.c.prepareStatement(sql);
-		st.setString(1, "%" + search.getText() + "%");
-		ResultSet rs = st.executeQuery();
-
-         }
+   
     }
-}
+
